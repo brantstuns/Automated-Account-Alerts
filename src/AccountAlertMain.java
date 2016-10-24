@@ -1,34 +1,28 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.*;
-
 public class AccountAlertMain {
 
 	public static void main(String[] args) {
-		List<String> l = null;
+		
+		File file = new File("/Users/Brant/dev/chromedriver");
+		System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
+		
+		List<String> credentials = null;
 		if (args[0].length() < 1) {
 			System.err.println("You didn't pass a file path");
 		} else {
-			l = getLoginFromFile(args[0]);
+			credentials = getLoginFromFile(args[0]);
 		}
-		FirefoxDriver driver = new FirefoxDriver();
-		mainService service = new mainService(driver);
-		service.loginBoa(l.get(0), l.get(1));
-		service.getBoaAmounts(driver);
-		service.loginChase(l.get(0), l.get(2));
-		service.getChaseAmounts(driver);
-		service.loginAmex(l.get(0), l.get(1));
-		service.getAmexAmounts(driver);
-		service.emailCurrentBalance(l.get(3), l.get(2));
-		service.endSession(driver);
+		final MainService service = new MainService();
+		service.getBalancesAndEmail(credentials);
 	}
 	
-	public static List<String> getLoginFromFile(String path) {
+	public static List<String> getLoginFromFile(final String path) {
 		List<String> fileContents = new ArrayList<String>();
 		BufferedReader in = null;
 		

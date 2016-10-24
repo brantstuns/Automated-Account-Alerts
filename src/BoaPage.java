@@ -1,34 +1,23 @@
-import org.apache.bcel.generic.BALOAD;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.*;
-import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class boaPage implements Accounts {
+public class BoaPage implements Accounts {
 	
-	private FirefoxDriver driver;
+	private static ChromeDriver driver;
 	private WebElement user;		
 	private WebElement pass;
 	private WebElement signInButton;
-	private WebElement SignInButtonPage2;	
-	private WebElement questionAnswer;	
-	private WebElement submitQuestion;
 	private WebElement visaCard;	
 	private WebElement currentBalance;	
-	private WebElement checkingBalance;	
-	private WebElement highschoolQuestion;
+	private WebElement checkingBalance;
 	
-	public boaPage(FirefoxDriver driver) {
+	public BoaPage(final ChromeDriver driver) {
 		this.driver = driver;
 	}
-	
-	public void clickVisaLink() {
-		visaCard.click();
-	}
-	
+
 	public WebElement getUserName() {
 		return user;
 	}
@@ -41,16 +30,8 @@ public class boaPage implements Accounts {
 		signInButton.click();
 	}
 
-	public void clickSignInButtonPage2() {
-		SignInButtonPage2.click();
-	}
-
-	public WebElement getSignInButtonPage2() {
-		return SignInButtonPage2;
-	}
-	
-	public void signIn(String u, String p) {
-		load(driver);
+	public void signIn(final String u, final String p) {
+		load();
 		WebElement user = getUserName();
 		WebElement pass = getpass();
 		
@@ -59,7 +40,7 @@ public class boaPage implements Accounts {
 		clickSignInButton();
 	}
 	
-	public void load(FirefoxDriver driver) {
+	public void load() {
 		driver.get("https://www.bankofamerica.com");
 		user = driver.findElementById("onlineId1");
 		pass = (new WebDriverWait(driver, 5)).until(ExpectedConditions
@@ -67,25 +48,20 @@ public class boaPage implements Accounts {
 		signInButton = driver.findElementById("hp-sign-in-btn");
 	}
 	
-	 public WebElement loadAndGetChecking(FirefoxDriver driver) {
-		//visaCard = boaLogin.driver.findElementById("BankAmericard Cash Rewards Signature Visa - 3963");
+	 public WebElement loadAndGetChecking() {
 		checkingBalance = (new WebDriverWait(driver, 5)).until(ExpectedConditions.
 				presenceOfElementLocated(By.cssSelector(".balanceValue.TL_NPI_L1")));
 		visaCard = (new WebDriverWait(driver, 5)).until(ExpectedConditions.
 				presenceOfElementLocated(By.name("CCA_details")));
 		return checkingBalance;
 	}
-
-	public void loginPage2(FirefoxDriver driver) {
-		pass = (new WebDriverWait(driver, 5)).until(ExpectedConditions
-				.presenceOfElementLocated(By.id("passcode1")));
-		SignInButtonPage2 = (new WebDriverWait(driver, 5))
-				.until(ExpectedConditions.presenceOfElementLocated(By
-						.name("enter-online-id-submit")));
-	}
 	
-	public String getAccountBalance(FirefoxDriver driver) {
+	public String getAccountBalance() {
 		currentBalance = driver.findElement(By.xpath("//div[@class='fl-rt bold TL_NPI_L1']"));
 		return currentBalance.getText();
+	}
+
+	public void endBrowserSession() {
+		driver.close();
 	}
 }

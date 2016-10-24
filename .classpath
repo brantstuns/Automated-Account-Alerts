@@ -42,5 +42,6 @@
 	<classpathentry kind="lib" path="/Users/Brant/Downloads/selenium-2.46.0/libs/xercesImpl-2.11.0.jar"/>
 	<classpathentry kind="lib" path="/Users/Brant/Downloads/selenium-2.46.0/libs/xml-apis-1.4.01.jar"/>
 	<classpathentry kind="lib" path="/Users/Brant/Downloads/javax.mail.jar"/>
+	<classpathentry kind="lib" path="/Users/Brant/Documents/workspace/Account_Alerts/postgresql-9.4.1208.jre6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
