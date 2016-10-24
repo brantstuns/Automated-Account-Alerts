@@ -108,7 +108,7 @@ public class MainService {
 			msg.setText("Your current BOA checking Act balance is:	" + boaTotal + "\n\n\n"
 					+ "Your current Chase Visa card balance is:	    " + chaseTotal + "\n\n\n"
 					+ "Your current American Express card balance is:    " + amexTotal + "\n\n\n");
-			//Transport.send(msg);
+			Transport.send(msg);
 			System.out.println("Email sent. ;)");
 		} catch (MessagingException mex) {
 			mex.printStackTrace();
